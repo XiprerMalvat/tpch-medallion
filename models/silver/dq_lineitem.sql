@@ -1,6 +1,6 @@
-with source as (
+with lineitem as (
 
-    select * from {{ source('tpch', 'lineitem') }}
+    select * from {{ ref('stg_lineitem') }}
 
 ),
 

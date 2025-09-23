@@ -1,6 +1,6 @@
-with source as (
+with orders as (
 
-    select * from {{ source('tpch', 'orders') }}
+    select * from {{ ref('stg_orders') }}
 
 ),
 

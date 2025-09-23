@@ -1,0 +1,119 @@
+version: 2
+
+sources:
+  - name: staging
+    description: Source data for the TPCH dataset.
+    database: snowflake_sample_data
+    schema: tpch_sf1
+    tables:
+      - name: customer
+        description: Registered customers
+        columns:
+          - name: c_custkey
+            description: Customer ID
+            tests:
+              - unique
+              - not_null
+      - name: region
+        description: List of registeres regions
+        columns:
+          - name: r_regionkey
+            description: Region ID
+            tests:
+              - unique
+              - not_null
+      - name: nation
+        description: List of registered nations within a region
+        columns:
+          - name: n_nationkey
+            description: Nation ID
+            tests:
+              - unique
+              - not_null
+          - name: n_regionkey
+            description: Region ID
+            tests:
+              - relationships:
+                  to: source('staging', 'region')
+                  field: r_regionkey
+              - not_null
+      - name: supplier
+        description: Item supplier
+        columns:
+          - name: s_suppkey
+            description: Supplier ID
+            tests:
+              - unique
+              - not_null
+          - name: s_nationkey
+            description: Nation ID for the supplier
+            tests:
+              - relationships:
+                  field: n_nationkey
+                  to: source('staging', 'nation')
+              - not_null
+      - name: part
+        description: Part of the item supplied
+        columns:
+          - name: p_partkey
+            description: Part ID
+            tests:
+              - unique
+              - not_null
+      - name: partsupp
+        description: Part-supplier pair
+        columns:
+          - name: ps_partkey
+            description: Part ID
+            tests:
+              - not_null
+              - relationships:
+                  field: p_partkey
+                  to: source('staging', 'part')
+          - name: ps_suppkey
+            description: Supplier ID
+            tests:
+              - not_null
+              - relationships:
+                  field: s_suppkey
+                  to: source('staging', 'supplier')
+      - name: orders
+        description: Track orders
+        columns:
+          - name: o_orderkey
+            description: Order ID
+            tests:
+              - unique
+              - not_null
+          - name: o_custkey
+            description: Customer ID
+            tests:
+              - relationships:
+                  field: c_custkey
+                  to: source('staging', 'customer')
+      - name: lineitem
+        description: Main lineitem table
+        columns:
+          - name: l_linenumber
+            description: Line number ID
+            tests:
+              - unique
+              - not_null
+          - name: l_orderkey
+            description: Order ID foreign key to orders.o_orderkey
+            tests:
+              - relationships:
+                  to: source('staging', 'orders')
+                  field: o_orderkey
+          - name: l_partkey
+            description: Part ID foreign key to part.p_partkey
+            tests:
+              - relationships:
+                  field: p_partkey
+                  to: source('staging', 'part')
+          - name: l_suppkey
+            description: Supplier ID foreign key to supplier.s_suppkey
+            tests:
+              - relationships:
+                  field: s_suppkey
+                  to: source('staging', 'supplier')

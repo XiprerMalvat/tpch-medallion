@@ -2,7 +2,7 @@ with src as (
   select *, 
     current_timestamp() as _ingest_ts,
     '{{ invocation_id }}' as _ingest_batch_id,
-    lower(hash( to_varchar(O_ORDERKEY))) as _record_hash
-  from {{ source('staging','orders') }}
+    lower(hash( to_varchar(N_NATIONKEY))) as _record_hash
+  from {{ source('staging','nation') }}
 )
 select * from src
