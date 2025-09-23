@@ -1,0 +1,33 @@
+version: 2
+
+sources:
+  - name: staging
+    description: Source data for the TPCH dataset.
+    database: snowflake_sample_data
+    schema: tpch_sf1
+    tables:
+      - name: orders
+        description: Track orders
+        columns:
+          - name: o_orderkey
+            description: Order ID
+            tests:
+              - unique
+              - not_null
+      - name: lineitem
+        description: Main lineitem table
+        columns:
+          - name: l_orderkey
+            description: Foreign key to orders.o_orderkey
+            tests:
+              - relationships:
+                  to: source('staging', 'orders')
+                  field: o_orderkey
+      - name: customer
+        description: Registered customers
+        columns:
+          - name: c_custkey
+            description: Customer ID
+            tests:
+              - unique
+              - not null
