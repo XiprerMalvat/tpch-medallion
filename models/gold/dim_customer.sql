@@ -6,10 +6,10 @@
 select
 
     c.id,
-    c."name" as customer_name,
-    c."address",
-    n."name" as nation_name,
-    r."name" as region_name,
+    c."NAME" as customer_name,
+    c.address,
+    n."NAME" as nation_name,
+    r."NAME" as region_name,
     c.phone,
     c.account_balance,
     c.market_segment
