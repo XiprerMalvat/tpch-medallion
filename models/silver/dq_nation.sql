@@ -7,7 +7,7 @@ with
         select
 
             n_nationkey as id,
-            n_name as "name",
+            n_name as "NAME",
             n_comment as n_comment,
             n_regionkey as region_id
 
