@@ -1,5 +1,5 @@
 with
-    source as (select * from {{ ref("stg_supplier") }}),
+    source as (select * from {{ ref("stg_partsupp") }}),
 
     renamed as (
         -- We would cast types as well here if it was necessary.
