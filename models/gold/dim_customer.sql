@@ -5,7 +5,7 @@
 
 select
 
-    c.id as customer_id,
+    c.id,
     c."name" as customer_name,
     c."address",
     n."name" as nation_name,
