@@ -6,6 +6,7 @@ The dataset used is the TPCH one, which is available in Snowflake by default.
 # Relevant commmands
 dbt run
 dbt snapshot
+dbt run --full-refresh --select dim_customer+
 
 # Changes
 dbt_project.yml has the source changed to a replica of the TPCH original dataset to enable UPDATES
