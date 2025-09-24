@@ -7,7 +7,7 @@ with
         select
 
             c_custkey as id,
-            c_address as adress,
+            c_address as "address",
             c_name as "name",
             c_nationkey as nation_id,
             c_phone as phone,
