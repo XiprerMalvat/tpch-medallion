@@ -6,6 +6,8 @@ with
         -- E.g.: When ingesting from a raw format such as a CSV file.
         select
 
+            {{ dbt_utils.generate_surrogate_key(["ps_suppkey", "ps_partkey"]) }}
+            as id,
             ps_suppkey as supplier_id,
             ps_partkey as part_id,
             ps_supplycost as supply_cost,
