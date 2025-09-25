@@ -1,3 +1,8 @@
+{{ config(
+    materialized='incremental',
+    unique_key='_record_hash'
+) }}
+
 with src as (
   select *, 
     current_timestamp() as _ingest_ts,
